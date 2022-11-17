@@ -6,17 +6,13 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:03:19 by tamsi             #+#    #+#             */
-/*   Updated: 2022/09/07 17:04:34 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/17 18:33:30 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <pthread.h>
+#include "philosopher.h"
 
-# define NC	"\e[0m"
-# define YELLOW	"\e[1;33m"
-
-void	*thread_routine(void *data)
+void	*thread_routine()
 {
 	pthread_t tid;
 
@@ -26,18 +22,27 @@ void	*thread_routine(void *data)
 	return (NULL);
 }
 
-int	main(void)
-{
-	pthread_t	tid1;
-	pthread_t	tid2;
+// int	start_dinner(t_dinner *dinner)
+// {
+// 	int	i;
 
-	pthread_create(&tid1, NULL, thread_routine, NULL);
-	printf("Main: Creation du premier thread [%ld]\n", tid1);
-	pthread_create(&tid2, NULL, thread_routine, NULL);
-	printf("Main: Creation du second thread [%ld]\n", tid2);
-	pthread_join(tid1, NULL);
-	printf("Main: Union du premier thread [%ld]\n", tid1);
-	pthread_join(tid2, NULL);
-	printf("Main: Union du second thread [%ld]\n", tid2);
+// 	i = 0;
+// 	while (i < dinner->nb_philos)
+// 	{
+// 		if (pthread_create(&philo[i], NULL, thread_routine, NULL) != 0)
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
+
+int	main(int ac, char **av)
+{
+	t_dinner	*dinner;
+
+	if (!ft_check_arg(ac, av))
+		return (0);
+	dinner = init_dinner(av);
+	free_dinner(dinner);
 	return (0);
 }
