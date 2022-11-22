@@ -6,35 +6,49 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:03:19 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/17 18:33:30 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/21 17:04:13 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	*thread_routine()
+void	*philo_routine(void	*data)
 {
-	pthread_t tid;
+	t_philo	*philo;
 
-	tid = pthread_self();
-	printf("%sThread [%ld]: Le plus grand ennui c'est d'exister sans vivre.%s\n",
-		YELLOW, tid, NC);
-	return (NULL);
+	philo = (t_philo *)data;
+	eating(philo);
+	sleeping(philo);
+	thinking(philo);
+	return (data);
 }
 
-// int	start_dinner(t_dinner *dinner)
-// {
-// 	int	i;
+int	start_dinner(t_dinner *dinner)
+{
+	unsigned int	i;
 
-// 	i = 0;
-// 	while (i < dinner->nb_philos)
-// 	{
-// 		if (pthread_create(&philo[i], NULL, thread_routine, NULL) != 0)
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
+	dinner->start_time = get_current_time() + dinner->nb_philos * 20;
+	i = 0;
+	while (i < dinner->nb_philos)
+	{
+		if (pthread_create(&dinner->philos[i]->thread, NULL, &philo_routine, dinner->philos[i]) != 0)
+			return (int_error_msg("philo thread creation gone wrong.\n"));
+		i++;
+	}
+	return (1);
+}
+
+void	end_dinner(t_dinner *dinner)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < dinner->nb_philos)
+	{
+		pthread_join(dinner->philos[i]->thread, NULL);
+		i++;
+	}
+}
 
 int	main(int ac, char **av)
 {
@@ -43,6 +57,9 @@ int	main(int ac, char **av)
 	if (!ft_check_arg(ac, av))
 		return (0);
 	dinner = init_dinner(av);
+	// while (1)
+	start_dinner(dinner);
+	end_dinner(dinner);
 	free_dinner(dinner);
 	return (0);
 }

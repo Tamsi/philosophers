@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:24 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/17 18:30:49 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/20 14:25:36 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ int	ft_check_arg(int ac, char **av)
 {
 	int	i;
 
-	if (ac != 5)
-		return (int_error_msg("Usage : ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep.\n"));
+	if (ac > 6 || ac < 5)
+		return (int_error_msg("usage -> ./philo number_of_philosophers time_to_die time_to_eat\
+ time_to_sleep [number_of_times_each_philosopher_must_eat].\n"));
 	i = 1;
 	while (i < ac)
 	{
