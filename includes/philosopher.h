@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:39:10 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/23 17:28:06 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:31:07 by tbesson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_dinner
 {
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printer;
-	pthread_mutex_t	dinner_mtx;
-	pthread_mutex_t	dinner_wait;
+	pthread_mutex_t	eating_mtx;
+	pthread_mutex_t	wait;
 	pthread_t		check_philos;
 	unsigned int	nb_philos;
 	unsigned int	end;
@@ -64,7 +64,12 @@ int			ft_check_arg(int ac, char **av);
 int			int_error_msg(char *str);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
-int			get_current_time();
+int			get_current_time(void);
+int			end_eat_cond(t_dinner *dinner);
+int			is_dinner_ended(t_dinner *dinner);
+void		wait_time(time_t time);
+void		end_dinner(t_dinner *dinner);
+void		set_dinner_end(t_dinner *dinner, int set);
 void		free_dinner(t_dinner *dinner);
 void		*pointer_error_msg(char *str);
 void		sleeping(t_philo *philo);

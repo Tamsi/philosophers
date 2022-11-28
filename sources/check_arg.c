@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:24 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/20 14:25:36 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/28 12:05:25 by tbesson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	ft_check_arg(int ac, char **av)
 	while (i < ac)
 	{
 		if (!ft_check_digit(av[i]))
-			return (int_error_msg("Arguments must contains only digits and must be positive integers.\n"));
+			return (int_error_msg("Arguments must contains only\
+ digits and must be positive integers.\n"));
 		if (i == 1 && (ft_atoi(av[i]) < 1 || ft_atoi(av[i]) > MAX_PHILO))
 			return (int_error_msg("Bad number of philosophers !\n"));
 		i++;

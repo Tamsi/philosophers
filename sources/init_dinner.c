@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_dinner.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:19:30 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/23 17:28:30 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/28 16:50:22 by tbesson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,10 @@ static t_philo	**init_philo(t_dinner *dinner)
 			return (pointer_error_msg("Error when malloc philo."));
 		philo[i]->dinner = dinner;
 		philo[i]->last_dinner = 0;
-		philo[i]->id = i + 1;
+		philo[i]->id = i;
+		philo[i]->fork[(i + 1) % 2] = philo[i]->id;
+		philo[i]->fork[i % 2] = (philo[i]->id + 1) % dinner->nb_philos;
 		philo[i]->eat_count = 0;
-		philo[i]->fork[0] = i;
-		philo[i]->fork[1] = i + 1;
-		if (philo[i]->id == dinner->nb_philos)
-			philo[i]->fork[1] = i - 1;
 		i++;
 	}
 	return (philo);
@@ -65,8 +63,8 @@ t_dinner	*init_dinner(char **av)
 	if (!dinner)
 		return (pointer_error_msg("Error when malloc dinner."));
 	if (pthread_mutex_init(&dinner->printer, 0) != 0
-		|| pthread_mutex_init(&dinner->dinner_mtx, 0) != 0
-		|| pthread_mutex_init(&dinner->dinner_wait, 0) != 0)
+		|| pthread_mutex_init(&dinner->eating_mtx, 0) != 0
+		|| pthread_mutex_init(&dinner->wait, 0) != 0)
 		pointer_error_msg("init mutex gone wrong.\n");
 	dinner->start_time = 0;
 	dinner->nb_philos = ft_atoi(av[1]);

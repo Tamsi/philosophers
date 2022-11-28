@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+         #
+#    By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/13 19:29:13 by tbesson           #+#    #+#              #
-#    Updated: 2022/11/21 17:03:31 by tamsi            ###   ########.fr        #
+#    Updated: 2022/11/28 12:29:11 by tbesson          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS_NAME	= main.c			\
 				check_arg.c		\
 				utils.c			\
 				init_dinner.c	\
-				exit_dinner.c	\
+				end_dinner.c	\
 				lib.c			\
 				philo_states.c
 OBJS_DIR	= objs
