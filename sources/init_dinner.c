@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:19:30 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/21 17:05:26 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/23 17:28:30 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static t_philo	**init_philo(t_dinner *dinner)
 		if (!philo[i])
 			return (pointer_error_msg("Error when malloc philo."));
 		philo[i]->dinner = dinner;
+		philo[i]->last_dinner = 0;
 		philo[i]->id = i + 1;
 		philo[i]->eat_count = 0;
 		philo[i]->fork[0] = i;
@@ -64,13 +65,15 @@ t_dinner	*init_dinner(char **av)
 	if (!dinner)
 		return (pointer_error_msg("Error when malloc dinner."));
 	if (pthread_mutex_init(&dinner->printer, 0) != 0
-		|| pthread_mutex_init(&dinner->dinner_mtx, 0) != 0)
+		|| pthread_mutex_init(&dinner->dinner_mtx, 0) != 0
+		|| pthread_mutex_init(&dinner->dinner_wait, 0) != 0)
 		pointer_error_msg("init mutex gone wrong.\n");
 	dinner->start_time = 0;
 	dinner->nb_philos = ft_atoi(av[1]);
 	dinner->time_to_die = ft_atoi(av[2]);
 	dinner->time_to_eat = ft_atoi(av[3]);
 	dinner->time_to_sleep = ft_atoi(av[4]);
+	dinner->end = 0;
 	dinner->must_eat_count = -1;
 	if (av[5])
 		dinner->must_eat_count = ft_atoi(av[5]);

@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:31:47 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/21 16:56:21 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/23 17:32:30 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	free_dinner(t_dinner *dinner)
 	if (!dinner)
 		return ;
 	i = 0;
+	if (dinner->forks)
+		free(dinner->forks);
 	if (dinner->philos)
 	{
 		while (i < dinner->nb_philos)
@@ -27,7 +29,6 @@ void	free_dinner(t_dinner *dinner)
 				free(dinner->philos[i]);
 			i++;
 		}
-		free(dinner->forks);
 		free(dinner->philos);
 	}
 	free(dinner);

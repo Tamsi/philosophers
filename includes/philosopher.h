@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:39:10 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/21 17:05:39 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/11/23 17:28:06 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define YELLOW	"\e[1;33m"
 # define RESET	"\033[0m"
 # define MAX_PHILO	255
+# define DIE	0
 # define FORK_1	1
 # define FORK_2	2
 # define EAT	3
@@ -37,7 +38,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	unsigned int	fork[2];
 	unsigned int	id;
-	unsigned int	eat_count;
+	int				eat_count;
 	time_t			last_dinner;
 	t_dinner		*dinner;
 }	t_philo;
@@ -47,8 +48,11 @@ typedef struct s_dinner
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printer;
 	pthread_mutex_t	dinner_mtx;
+	pthread_mutex_t	dinner_wait;
+	pthread_t		check_philos;
 	unsigned int	nb_philos;
-	unsigned int	must_eat_count;
+	unsigned int	end;
+	int				must_eat_count;
 	time_t			start_time;
 	time_t			time_to_die;
 	time_t			time_to_eat;
@@ -66,6 +70,7 @@ void		*pointer_error_msg(char *str);
 void		sleeping(t_philo *philo);
 void		eating(t_philo *philo);
 void		thinking(t_philo *philo);
+void		died(t_philo *philo);
 t_dinner	*init_dinner(char **av);
 
 #endif
