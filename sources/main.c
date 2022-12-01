@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:03:19 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/28 16:37:05 by tbesson          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:19:04 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*philo_routine(void	*data)
 	while (get_current_time() < philo->dinner->start_time)
 		continue ;
 	if (philo->id % 2)
-		thinking(philo);
+		wait_time(get_current_time() + 1);
 	while (!is_dinner_ended(philo->dinner))
 	{
 		eating(philo);
@@ -42,7 +42,7 @@ void	*check_philo_routine(void	*data)
 		continue ;
 	while (1)
 	{
-		if (end_eat_cond(dinner))
+		if (end_dinner_cond(dinner))
 			return (NULL);
 		usleep(1000);
 	}
@@ -53,7 +53,7 @@ int	start_dinner(t_dinner *dinner)
 {
 	unsigned int	i;
 
-	dinner->start_time = get_current_time() + dinner->nb_philos * 21;
+	dinner->start_time = get_current_time() + (dinner->nb_philos * 25);
 	i = 0;
 	if (dinner->must_eat_count == 0)
 		return (1);

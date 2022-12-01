@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   end_dinner.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:31:47 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/28 13:51:45 by tbesson          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:12:26 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	end_eat_cond(t_dinner *dinner)
+int	end_dinner_cond(t_dinner *dinner)
 {
 	unsigned int	check_eat_count;
 	unsigned int	i;
 
 	i = 0;
 	check_eat_count = 1;
+	if (dinner->must_eat_count == -1)
+		check_eat_count = 0;
 	while (i < dinner->nb_philos)
 	{
 		pthread_mutex_lock(&dinner->eating_mtx);
@@ -28,13 +30,12 @@ int	end_eat_cond(t_dinner *dinner)
 			>= dinner->time_to_die)
 		{
 			died(dinner->philos[i]);
-			set_dinner_end(dinner, 1);
 			return (1);
 		}
 		pthread_mutex_unlock(&dinner->eating_mtx);
 		i++;
 	}
-	set_dinner_end(dinner, !check_eat_count);
+	set_dinner_end(dinner, check_eat_count);
 	return (check_eat_count);
 }
 

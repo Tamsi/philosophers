@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:27:00 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/28 15:31:11 by tbesson          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:20:35 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int	get_current_time(void)
+time_t	get_current_time(void)
 {
 	struct timeval	tval;
 
 	gettimeofday(&tval, NULL);
-	return (tval.tv_usec);
+	return ((tval.tv_sec * 1000) + (tval.tv_usec / 1000));
 }
 
 void	wait_time(time_t time)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_states.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 17:52:01 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/28 16:50:36 by tbesson          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:17:18 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ static void	print_states(int states, t_philo *philo)
 		return ;
 	pthread_mutex_lock(&philo->dinner->printer);
 	if (states == 0)
-		printf("%i %i died\n", get_current_time(), philo->id + 1);
+		printf(RED"%lu : %i died\n"RESET, get_current_time(), philo->id + 1);
 	else if (states == 1)
-		printf(YELLOW"%i %i has taken fork %i\n"RESET,
+		printf("%lu : %i has taken fork %i\n",
 			get_current_time(), philo->id + 1, philo->fork[0] + 1);
 	else if (states == 2)
-		printf(YELLOW"%i %i has taken fork %i\n"RESET,
+		printf("%lu : %i has taken fork %i\n",
 			get_current_time(), philo->id + 1, philo->fork[1] + 1);
 	else if (states == 3)
-		printf(RED"%i %i is eating\n"RESET, get_current_time(), philo->id + 1);
+		printf("%lu : %i is eating\n", get_current_time(), philo->id + 1);
 	else if (states == 4)
-		printf(YELLOW"%i %i is sleeping\n"RESET,
+		printf("%lu : %i is sleeping\n",
 			get_current_time(), philo->id + 1);
 	else
-		printf(YELLOW"%i %i is thinking\n"RESET,
+		printf("%lu : %i is thinking\n",
 			get_current_time(), philo->id + 1);
 	pthread_mutex_unlock(&philo->dinner->printer);
 }
@@ -50,7 +50,8 @@ void	sleeping(t_philo *philo)
 
 void	died(t_philo *philo)
 {
-	print_states(DIE, philo);
+	set_dinner_end(philo->dinner, 1);
+	printf(RED"%lu : %i died\n"RESET, get_current_time(), philo->id + 1);
 	pthread_mutex_unlock(&philo->dinner->eating_mtx);
 }
 
@@ -58,9 +59,13 @@ void	thinking(t_philo *philo)
 {
 	time_t	time_to_think;
 
-	time_to_think = (philo->dinner->time_to_die - (get_current_time() - philo->last_dinner) - philo->dinner->time_to_eat) / 2;
+	time_to_think = (philo->dinner->time_to_die
+			- (get_current_time() - philo->last_dinner)
+			- philo->dinner->time_to_eat) / 2;
 	if (time_to_think < 0)
-		time_to_think = 1;
+		time_to_think = 0;
+	if (time_to_think > 600)
+		time_to_think = 200;
 	if (!is_dinner_ended(philo->dinner))
 	{
 		pthread_mutex_lock(&philo->dinner->eating_mtx);

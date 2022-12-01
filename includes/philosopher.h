@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:39:10 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/28 15:31:07 by tbesson          ###   ########.fr       */
+/*   Updated: 2022/12/01 14:31:31 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int			ft_check_arg(int ac, char **av);
 int			int_error_msg(char *str);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
-int			get_current_time(void);
-int			end_eat_cond(t_dinner *dinner);
+int			end_dinner_cond(t_dinner *dinner);
 int			is_dinner_ended(t_dinner *dinner);
 void		wait_time(time_t time);
 void		end_dinner(t_dinner *dinner);
@@ -77,5 +76,6 @@ void		eating(t_philo *philo);
 void		thinking(t_philo *philo);
 void		died(t_philo *philo);
 t_dinner	*init_dinner(char **av);
+time_t		get_current_time(void);
 
 #endif
