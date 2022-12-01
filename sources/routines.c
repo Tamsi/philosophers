@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:52:06 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 22:45:53 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 23:15:16 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	*philo_routine(void *data)
 	pthread_mutex_unlock(&philo->eating_mtx);
 	if (philo->id % 2)
 		usleep(philo->dinner->time_to_eat * 1000);
+	else
+		usleep(philo->dinner->nb_philos * 500);
 	while (!is_dinner_ended(philo->dinner))
 	{
 		eating(philo);

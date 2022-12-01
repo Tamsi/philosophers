@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:49:34 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 22:46:05 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 23:20:00 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	start_philos(t_dinner *dinner)
 int	start_dinner(t_dinner *dinner)
 {
 
-	dinner->start_time = get_current_time();
+	dinner->start_time = get_current_time() + (dinner->nb_philos / 2);
 	if (dinner->must_eat_count == 0)
 		return (1);
 	if (dinner->nb_philos == 1 || dinner->time_to_die == 0)
