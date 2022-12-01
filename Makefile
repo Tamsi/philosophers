@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+         #
+#    By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/13 19:29:13 by tbesson           #+#    #+#              #
-#    Updated: 2022/11/28 12:29:11 by tbesson          ###   ########.fr        #
+#    Updated: 2022/12/01 21:55:46 by tamsi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ SRCS_NAME	= main.c			\
 				init_dinner.c	\
 				end_dinner.c	\
 				lib.c			\
-				philo_states.c
+				philo_states.c	\
+				start_dinner.c	\
+				routines.c
 OBJS_DIR	= objs
 OBJS_NAME	= ${SRCS_NAME:.c=.o}
 SRCS		= $(addprefix $(SRCS_DIR)/,$(SRCS_NAME))

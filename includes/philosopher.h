@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:39:10 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 16:33:07 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 21:52:56 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <unistd.h>
 
 # define RED	"\e[31m"
-# define YELLOW	"\e[1;33m"
 # define RESET	"\033[0m"
 # define MAX_PHILO	255
 # define DIE	0
@@ -60,12 +59,17 @@ typedef struct s_dinner
 	t_philo			**philos;
 }	t_dinner;
 
+int			ft_strlen(const char *str);
 int			ft_check_arg(int ac, char **av);
 int			int_error_msg(char *str);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
 int			end_dinner_cond(t_dinner *dinner);
 int			is_dinner_ended(t_dinner *dinner);
+int			start_dinner(t_dinner *dinner);
+void		*check_philo_routine(void	*data);
+void		*philo_routine(void	*data);
+void		ft_putnbr(long long int nbr);
 void		wait_time(time_t time);
 void		end_dinner(t_dinner *dinner);
 void		set_dinner_end(t_dinner *dinner, int set);

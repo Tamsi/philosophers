@@ -6,11 +6,23 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 16:45:24 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/19 16:46:54 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 21:04:35 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+int	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}
 
 int	ft_isdigit(int c)
 {
@@ -43,4 +55,16 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (res * neg);
+}
+
+void	ft_putnbr(long long int nbr)
+{
+	char		c;
+
+	if (nbr >= 10)
+	{
+		ft_putnbr(nbr / 10);
+	}
+	c = (nbr % 10) + '0';
+	write(1, &c, 1);
 }

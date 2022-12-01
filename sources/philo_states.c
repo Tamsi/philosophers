@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 17:52:01 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 17:05:15 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 22:43:19 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 static void	print_states(int states, t_philo *philo)
 {
-	if (is_dinner_ended(philo->dinner))
+	if (is_dinner_ended(philo->dinner) && states != 0)
 		return ;
 	pthread_mutex_lock(&philo->dinner->printer);
+	ft_putnbr((long long int)(get_current_time() - philo->dinner->start_time));
+	write(1, " ", 1);
+	ft_putnbr((long long int)philo->id + 1);
 	if (states == 0)
-		printf(RED"%lu : %i died\n"RESET, get_current_time(), philo->id + 1);
+		write(1, " died\n", ft_strlen(" died\n"));
 	else if (states == 1)
-		printf("%lu : %i has taken fork %i\n",
-			get_current_time(), philo->id + 1, philo->fork[0] + 1);
+		write(1, " has taken a fork\n", ft_strlen(" has taken a fork\n"));
 	else if (states == 2)
-		printf("%lu : %i has taken fork %i\n",
-			get_current_time(), philo->id + 1, philo->fork[1] + 1);
+		write(1, " has taken a fork\n", ft_strlen(" has taken a fork\n"));
 	else if (states == 3)
-		printf("%lu : %i is eating\n", get_current_time(), philo->id + 1);
+		write(1, " is eating\n", ft_strlen(" is eating\n"));
 	else if (states == 4)
-		printf("%lu : %i is sleeping\n",
-			get_current_time(), philo->id + 1);
+		write(1, " is sleeping\n", ft_strlen(" is sleeping\n"));
 	else
-		printf("%lu : %i is thinking\n",
-			get_current_time(), philo->id + 1);
+		write(1, " is thinking\n", ft_strlen(" is thinking\n"));
 	pthread_mutex_unlock(&philo->dinner->printer);
 }
 
@@ -51,7 +50,7 @@ void	sleeping(t_philo *philo)
 void	died(t_philo *philo)
 {
 	set_dinner_end(philo->dinner, 1);
-	printf(RED"%lu : %i died\n"RESET, get_current_time(), philo->id + 1);
+	print_states(DIE, philo);
 	pthread_mutex_unlock(&philo->eating_mtx);
 }
 
@@ -79,6 +78,8 @@ void	thinking(t_philo *philo)
 
 void	eating(t_philo *philo)
 {
+	if (is_dinner_ended(philo->dinner))
+		return ;
 	pthread_mutex_lock(&philo->dinner->forks[philo->fork[0]]);
 	print_states(FORK_1, philo);
 	pthread_mutex_lock(&philo->dinner->forks[philo->fork[1]]);

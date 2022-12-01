@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:27:00 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 15:20:35 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 21:16:43 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ time_t	get_current_time(void)
 void	wait_time(time_t time)
 {
 	while (get_current_time() < time)
-		usleep(100);
+		usleep(1000);
 }
 
 int	int_error_msg(char *str)
