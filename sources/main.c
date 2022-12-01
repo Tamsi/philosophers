@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:03:19 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 15:19:04 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 17:04:50 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	*philo_routine(void	*data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	pthread_mutex_lock(&philo->dinner->eating_mtx);
+	pthread_mutex_lock(&philo->eating_mtx);
 	philo->last_dinner = philo->dinner->start_time;
-	pthread_mutex_unlock(&philo->dinner->eating_mtx);
+	pthread_mutex_unlock(&philo->eating_mtx);
 	while (get_current_time() < philo->dinner->start_time)
 		continue ;
 	if (philo->id % 2)
@@ -57,6 +57,13 @@ int	start_dinner(t_dinner *dinner)
 	i = 0;
 	if (dinner->must_eat_count == 0)
 		return (1);
+	if (dinner->nb_philos == 1)
+	{
+		printf("%lu : 1 has taken fork 1\n", get_current_time());
+		wait_time(get_current_time() + dinner->time_to_die);
+		printf(RED"%lu : 1 died\n"RESET, get_current_time());
+		return (1);
+	}
 	while (i < dinner->nb_philos)
 	{
 		if (pthread_create(&dinner->philos[i]->thread,

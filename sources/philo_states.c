@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 17:52:01 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 15:17:18 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 17:05:15 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,48 +52,47 @@ void	died(t_philo *philo)
 {
 	set_dinner_end(philo->dinner, 1);
 	printf(RED"%lu : %i died\n"RESET, get_current_time(), philo->id + 1);
-	pthread_mutex_unlock(&philo->dinner->eating_mtx);
+	pthread_mutex_unlock(&philo->eating_mtx);
 }
 
 void	thinking(t_philo *philo)
 {
 	time_t	time_to_think;
 
+	pthread_mutex_lock(&philo->eating_mtx);
 	time_to_think = (philo->dinner->time_to_die
 			- (get_current_time() - philo->last_dinner)
 			- philo->dinner->time_to_eat) / 2;
+	pthread_mutex_unlock(&philo->eating_mtx);
 	if (time_to_think < 0)
 		time_to_think = 0;
 	if (time_to_think > 600)
 		time_to_think = 200;
 	if (!is_dinner_ended(philo->dinner))
 	{
-		pthread_mutex_lock(&philo->dinner->eating_mtx);
+		pthread_mutex_lock(&philo->eating_mtx);
 		print_states(THINK, philo);
-		pthread_mutex_unlock(&philo->dinner->eating_mtx);
-		wait_time(time_to_think);
+		pthread_mutex_unlock(&philo->eating_mtx);
+		wait_time(get_current_time() + time_to_think);
 	}
 }
 
 void	eating(t_philo *philo)
 {
-	time_t	time_to_eat;
-
-	time_to_eat = get_current_time() + philo->dinner->time_to_eat;
 	pthread_mutex_lock(&philo->dinner->forks[philo->fork[0]]);
 	print_states(FORK_1, philo);
 	pthread_mutex_lock(&philo->dinner->forks[philo->fork[1]]);
 	print_states(FORK_2, philo);
 	print_states(EAT, philo);
-	pthread_mutex_lock(&philo->dinner->eating_mtx);
+	pthread_mutex_lock(&philo->eating_mtx);
 	philo->last_dinner = get_current_time();
-	pthread_mutex_unlock(&philo->dinner->eating_mtx);
-	wait_time(time_to_eat);
+	pthread_mutex_unlock(&philo->eating_mtx);
+	wait_time(get_current_time() + philo->dinner->time_to_eat);
 	if (!is_dinner_ended(philo->dinner))
 	{
-		pthread_mutex_lock(&philo->dinner->eating_mtx);
+		pthread_mutex_lock(&philo->eating_mtx);
 		philo->eat_count++;
-		pthread_mutex_unlock(&philo->dinner->eating_mtx);
+		pthread_mutex_unlock(&philo->eating_mtx);
 	}
 	pthread_mutex_unlock(&philo->dinner->forks[philo->fork[0]]);
 	pthread_mutex_unlock(&philo->dinner->forks[philo->fork[1]]);

@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:39:10 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 14:31:31 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/01 16:33:07 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_dinner	t_dinner;
 typedef struct s_philo
 {
 	pthread_t		thread;
+	pthread_mutex_t	eating_mtx;
 	unsigned int	fork[2];
 	unsigned int	id;
 	int				eat_count;
@@ -47,7 +48,6 @@ typedef struct s_dinner
 {
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printer;
-	pthread_mutex_t	eating_mtx;
 	pthread_mutex_t	wait;
 	pthread_t		check_philos;
 	unsigned int	nb_philos;
