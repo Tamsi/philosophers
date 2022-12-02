@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_dinner.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:49:34 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/02 09:24:44 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/02 10:32:30 by tbesson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	start_philos(t_dinner *dinner)
 
 int	start_dinner(t_dinner *dinner)
 {
-
 	dinner->start_time = get_current_time() + (dinner->nb_philos / 2);
 	if (dinner->must_eat_count == 0)
 		return (1);
