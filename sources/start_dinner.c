@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 21:49:34 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 23:20:00 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/02 09:24:44 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	start_dinner(t_dinner *dinner)
 	if (dinner->nb_philos == 1 || dinner->time_to_die == 0)
 	{
 		printf("0 : 1 has taken fork 1\n");
-		wait_time(get_current_time() + dinner->time_to_die);
+		wait_time(dinner, get_current_time() + dinner->time_to_die);
 		printf("%lu : 1 died\n", dinner->time_to_die);
 		return (1);
 	}

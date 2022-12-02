@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:39:10 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 21:52:56 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/02 09:25:33 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			start_dinner(t_dinner *dinner);
 void		*check_philo_routine(void	*data);
 void		*philo_routine(void	*data);
 void		ft_putnbr(long long int nbr);
-void		wait_time(time_t time);
+void		wait_time(t_dinner *dinner, time_t time);
 void		end_dinner(t_dinner *dinner);
 void		set_dinner_end(t_dinner *dinner, int set);
 void		free_dinner(t_dinner *dinner);

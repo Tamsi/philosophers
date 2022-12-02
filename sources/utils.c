@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:27:00 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 21:16:43 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/02 09:25:22 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ time_t	get_current_time(void)
 	return ((tval.tv_sec * 1000) + (tval.tv_usec / 1000));
 }
 
-void	wait_time(time_t time)
+void	wait_time(t_dinner *dinner, time_t time)
 {
 	while (get_current_time() < time)
+	{
+		if (is_dinner_ended(dinner))
+			return ;
 		usleep(1000);
+	}
 }
 
 int	int_error_msg(char *str)

@@ -6,7 +6,7 @@
 /*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 17:52:01 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/01 22:43:19 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/02 09:24:31 by tamsi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	sleeping(t_philo *philo)
 	{
 		time_to_wakeup = get_current_time() + philo->dinner->time_to_sleep;
 		print_states(SLEEP, philo);
-		wait_time(time_to_wakeup);
+		wait_time(philo->dinner, time_to_wakeup);
 	}
 }
 
@@ -72,7 +72,7 @@ void	thinking(t_philo *philo)
 		pthread_mutex_lock(&philo->eating_mtx);
 		print_states(THINK, philo);
 		pthread_mutex_unlock(&philo->eating_mtx);
-		wait_time(get_current_time() + time_to_think);
+		wait_time(philo->dinner, get_current_time() + time_to_think);
 	}
 }
 
@@ -88,7 +88,7 @@ void	eating(t_philo *philo)
 	pthread_mutex_lock(&philo->eating_mtx);
 	philo->last_dinner = get_current_time();
 	pthread_mutex_unlock(&philo->eating_mtx);
-	wait_time(get_current_time() + philo->dinner->time_to_eat);
+	wait_time(philo->dinner, get_current_time() + philo->dinner->time_to_eat);
 	if (!is_dinner_ended(philo->dinner))
 	{
 		pthread_mutex_lock(&philo->eating_mtx);
