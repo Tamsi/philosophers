@@ -6,7 +6,7 @@
 /*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:24 by tamsi             #+#    #+#             */
-/*   Updated: 2022/11/28 12:05:25 by tbesson          ###   ########.fr       */
+/*   Updated: 2022/12/02 11:21:38 by tbesson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	ft_check_digit(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '+' && ft_strlen(str) > 1)
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
