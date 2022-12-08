@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_dinner.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 18:31:47 by tamsi             #+#    #+#             */
-/*   Updated: 2022/12/02 09:32:56 by tamsi            ###   ########.fr       */
+/*   Updated: 2022/12/08 17:42:00 by tbesson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ void	end_dinner(t_dinner *dinner)
 	unsigned int	i;
 
 	i = 0;
-	pthread_join(dinner->check_philos, NULL);
+	if (dinner->nb_philos > 1)
+		pthread_join(dinner->check_philos, NULL);
 	while (i < dinner->nb_philos)
 	{
 		pthread_mutex_destroy(&dinner->philos[i]->eating_mtx);
-		pthread_join(dinner->philos[i]->thread, NULL);
+		if (dinner->nb_philos > 1)
+			pthread_join(dinner->philos[i]->thread, NULL);
 		i++;
 	}
 	pthread_mutex_destroy(dinner->forks);

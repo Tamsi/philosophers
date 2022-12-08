@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tamsi <tamsi@student.42.fr>                +#+  +:+       +#+         #
+#    By: tbesson <tbesson@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/13 19:29:13 by tbesson           #+#    #+#              #
-#    Updated: 2022/12/01 21:55:46 by tamsi            ###   ########.fr        #
+#    Updated: 2022/12/08 17:42:17 by tbesson          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ NAME	= philo
 
 CC		= gcc
 RM		= rm -f
-CFLAGS	= $(INC) -Wall -Wextra -Werror
+CFLAGS	= $(INC) -Wall -Wextra -Werror -pthread
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
